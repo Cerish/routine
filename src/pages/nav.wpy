@@ -1,0 +1,109 @@
+<template>
+    <view class="navPage">
+        <repeat for="{{Arr}}" key="index">
+            {{item}}
+        </repeat>
+        <view>
+            <text wx:if="{{show}}">看得见我吗</text>
+            <button @tap="toggle()">切换</button>
+        </view>
+        <view class="nav">
+            <repeat for="{{navList}}" key="{{index}}">
+                <navigator
+                    url="{{item.path}}"
+                    @tap="click({{item.path}})">
+                    {{item.name}}
+                </navigator>
+            </repeat>
+        </view>
+        <view>
+            <text @tap="test({{show}})">123</text>
+        </view>
+        <view @tap="tapName('wepy', {{show}}, 'otherparams')"> Click me! </view>
+        <send :title.sync="Title" @change.user="change"></send>
+        <child1></child1>
+        <!-- <child2></child2> -->
+        <child></child>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Send from '../components/send'
+import Child1 from '../components/child1'
+import Child from '../components/child'
+export default class Nav extends wepy.page {
+    components = {
+        send: Send,
+        child: Child,
+        child1: Child1,
+        // child2: Child1
+    }
+    data = {
+        Arr: [1,2,3],
+        Title: '我是传参',
+        show: true,
+        navList: [
+            {
+                name: '首页1',
+                path: 'index'
+            },
+            {
+                name: '文本3',
+                path: 'content'
+            },
+            {
+                name: '导航',
+                path: 'nav'
+            }
+        ]
+    };
+    methods = {
+        toggle(name) {
+            console.log(name)
+            this.show = !this.show
+            console.log(this.show)
+        },
+        test(name,obj) {
+            console.log(name)
+            console.log(obj)
+        },
+        click(path,text) {
+            console.log(path)
+            console.log(text)
+        },
+        tapName (id, title, other, event) {
+            console.log(id, title, other,event)
+            this.Title = '我是改变后的参数'
+        },
+        change(message) {
+            console.log(123)
+            console.log(message)
+            this.Title = message
+        },
+        cb() {
+        }
+    };
+    event = {
+        
+    }
+}
+</script>
+
+<style lang="less">
+.navPage {
+    .nav {
+        width: 100%;
+        height: 200rpx;
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        navigator {
+            text-align: center;
+            width: 100%;
+        }
+    }
+}
+</style>

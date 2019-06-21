@@ -1,0 +1,40 @@
+<template>
+    <view>
+        <text>{{title}}</text>
+        <button @tap="changedata()">点击更改子组title</button>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class send extends wepy.component {
+    props = {
+        title: {
+            type: String,
+            default: 'nothing',
+            twoWay: true
+        }
+    };
+    data = {
+
+    };
+    methods = {
+        changedata() {
+            console.log(111)
+            this.title = '我在子组件被更改了'
+            this.$apply()
+            console.log(this.$parent.Title)
+        }
+    }
+    onLoad() {
+        console.log('我执行了')
+        // this.title = '我在子组件被更改了'
+        this.$emit('change', '我被通过emit修改了');
+        console.log(this.$name)
+    }
+}
+</script>
+
+<style>
+
+</style>

@@ -1,0 +1,65 @@
+
+<style lang="scss">
+.dialog{
+    &-shadow{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+    }
+    &-container{
+        background-color: #fff;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        z-index: 1000;
+    }
+}
+</style>
+<template>
+    <view class="Dialog">
+        <button @tap="openDialog">点击弹框</button>
+        <test>
+            <view class="dialog" wx:if="{{dialogShow}}">
+                <view class="dialog-shadow"></view>
+                <view class="dialog-container">
+                    <text @tap="dialogClose">关闭</text>
+                </view>
+            </view>
+        </test>
+        <view>
+            <text @tap="contact">点击联系</text>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Dialog from '../components/test'
+export default class dialog extends wepy.page{
+    data= {
+        dialogShow: false
+    }
+    components = {
+        test: Dialog
+    }
+    methods= {
+        openDialog() {
+            this.dialogShow = true
+        },
+        dialogClose() {
+            this.dialogShow = false
+            console.log(1)
+        },
+        contact() {
+            wx.makePhoneCall({
+                phoneNumber: '4008208820'
+            })
+        }
+    }
+}
+</script>
+

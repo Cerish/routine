@@ -1,0 +1,136 @@
+<template>
+    <view>
+        <panel>
+            <view slot="title">1</view>
+            123
+        </panel>
+        <child>
+            <view slot="title">1234</view>
+            <view slot="name">12345</view>
+        </child>
+        <panel>
+            <view slot="title">1</view>
+            123
+        </panel>
+        <child>
+            <view slot="title">1234</view>
+            <view slot="name">12345</view>
+        </child>
+        <panel>
+            <view slot="title">1</view>
+            123
+        </panel>
+        <child>
+            <view slot="title">1234</view>
+            <view slot="name">12345</view>
+        </child>
+        <panel>
+            <view slot="title">1</view>
+            123
+        </panel>
+        <child>
+            <view slot="title">1234</view>
+            <view slot="name">12345</view>
+        </child>
+        <panel>
+            <view slot="title">1</view>
+            123
+        </panel>
+        <child>
+            <view slot="title">1234</view>
+            <view slot="name">12345</view>
+        </child>
+        <panel>
+            <view slot="title">1</view>
+            123
+        </panel>
+        <child>
+            <view slot="title">1234</view>
+            <view slot="name">12345</view>
+        </child>
+        <button open-type="getUserInfo">getUserInfo</button>
+        <button @tap="refresh()">刷新</button>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import child from '../components/child'
+
+export default class Content extends wepy.page {
+    config = {};
+    components = {
+        child: child
+    };
+
+    data = {
+        userInfo: {}
+    };
+    methods = {};
+
+    events = {};
+    getData() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({data: 123});
+            }, 3000);
+        });
+    };
+    async onLoad() {
+        // let data = await this.getData();
+        // console.log(data.data);
+        wx.getSetting({
+            success(res) {
+                console.log(res)
+                if (!res.authSetting['scope.record']) {
+                    console.log(1)
+                    wx.authorize({
+                        scope: 'scope.record',
+                        success() {
+                        // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+                            console.log(123)
+                            wx.startRecord()
+                        }
+                    })
+                }
+            }
+        })
+    };
+    // async onLoad() {
+    //     this.userInfo = await wepy.getUserInfo({
+    //         success: (res) => {
+    //             console.log(res)
+    //         }
+    //     });
+    //     console.log(this.userInfo)
+    // };
+    // Other properties
+    onPullDownRefresh() {
+        console.log('开始下拉刷新')
+        wx.stopPullDownRefresh({
+            success: (res) => {
+                console.log(123)
+            },
+        })
+    };
+    onReachBottom(event) {
+        // console.log(123)
+    };
+    refresh() {
+        console.log(1)
+        wx.startPullDownRefresh({
+            success: (res) => {
+                console.log(111)
+            },
+            complete: () => {
+                console.log(123456)
+            }
+        }) 
+    }
+}
+</script>
+
+<style lang="less">
+/** less **/
+</style>
+

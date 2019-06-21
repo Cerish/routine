@@ -1,0 +1,25 @@
+<template>
+    <view>
+        <text>123</text>
+        <slot />
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Dialog extends wepy.component{
+    data= {
+
+    }
+    invoke() {
+        console.log('我被invoke调用了')
+    }
+    onLoad() {
+        console.log('我被调用执行了')
+    }
+}
+</script>
+
+<style>
+
+</style>

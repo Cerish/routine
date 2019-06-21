@@ -1,0 +1,75 @@
+<template>
+    <view class="container">
+        <view class="distinguish">
+            <text>{{num}}</text>
+            <button @tap="increament">+1</button>
+        </view>
+        <view class="computed">
+            <text>{{changeNum}}</text>
+        </view>
+        <view>
+            <text>图片</text>
+            <swiper 
+                autoplay
+                interval="2000"
+                circular
+                vertical>
+                <swiper-item>1</swiper-item>
+                <swiper-item>2</swiper-item>
+                <swiper-item>3</swiper-item>
+            </swiper>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import test from './test'
+export default class child1 extends wepy.component{
+    watch= {
+        num(newValue, oldValue) {
+            console.log(newValue, oldValue)
+        },
+        box(newValue, oldValue) {
+            console.log(newValue, oldValue)
+        }
+    }
+    components = {
+        test: test
+    }
+    data= {
+        num: 10,
+        box: {
+            width: 10,
+            height: 10
+        }
+    }
+    computed= {
+        changeNum() {
+            return this.num +10
+        }
+    }
+    methods= {  
+        increament() {
+            this.num = this.num + 1
+            this.box.height = this.box.height +10
+        }
+    }
+    change() {
+        console.log('我执行了')
+        this.num = this.num + 1
+        this.$apply()
+    }
+    onLoad() {
+        this.$invoke('./test', 'invoke')
+        console.log(123)
+        this.box.width = 20
+        this.$apply()
+        console.log(this.watch)
+    }
+}
+</script>
+
+<style>
+
+</style>

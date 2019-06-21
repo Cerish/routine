@@ -1,0 +1,101 @@
+<style lang="less">
+
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+
+const store = configStore()
+setStore(store)
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/test',
+      'pages/index',
+      'pages/nav',
+      'pages/dialog',
+      'pages/content',
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black',
+      enablePullDownRefresh: true
+    },
+    // "tabBar": {
+    //   color: "#7A7E83",
+    //   selectedColor: "#3cc51f",
+    //   borderStyle: "black",
+    //   backgroundColor: "#ffffff",
+    //   "list": [
+    //     {
+    //       "pagePath": "pages/index",
+    //       "text": "首页"
+    //     },
+    //     {
+    //       "pagePath": "pages/content",
+    //       "text": "日志"
+    //     },
+    //     {
+    //       "pagePath": "pages/nav",
+    //       "text": "导航"
+    //     } 
+    //   ]
+    // },
+    navigateToMiniProgramAppIdList: ['wxd49bcae0eef3990d']
+  }
+
+  globalData = {
+    userInfo: null
+  }
+  num = {
+    age: 10
+  }
+  constructor () {
+    super()
+    this.use('requestfix')
+  }
+
+  onLaunch() {
+    console.log(12313)
+    this.testAsync()
+    
+  }
+  sleep (s) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('promise resolved')
+      }, s * 1000)
+    })
+  }
+
+  async testAsync () {
+    const data = await this.sleep(1)
+    console.log(data)
+  }
+
+  async getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo
+        that.setData( {num: res.userInfo} )
+        console.log(this.num)
+        cb && cb(res.userInfo)
+      }
+    })
+    // const info = await wepy.getUserInfo()
+    const info = 132
+    console.log(info)
+  }
+}
+</script>

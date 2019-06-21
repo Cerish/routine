@@ -1,0 +1,21 @@
+<template>
+    <view class="child">
+        <slot>123</slot>
+        <slot name="name">名字</slot>
+        <slot name="title">默认标题</slot>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class child extends wepy.component {
+        data= {
+        }
+    }
+</script>
+
+<style>
+.child{ 
+    color: red;
+}
+</style>

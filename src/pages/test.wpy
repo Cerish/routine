@@ -1,0 +1,26 @@
+<template>
+    <view @tap="openOtherApp">123</view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Test extends wepy.page {
+    methods={
+        openOtherApp() {
+            wx.navigateToMiniProgram({
+                appId: 'wxd49bcae0eef3990d',
+                fail(res) {
+                    console.log(res)
+                },
+                success(res) {
+                    console.log(res)
+                }
+            })
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>
